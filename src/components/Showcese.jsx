@@ -3,7 +3,7 @@ import noutbuk from '../img/noutbuk.png'
 
 const Showcese = () => {
   return (
-    <section className='py-1'>
+    <section className='py-1 mb-13'>
         <div className='max-w-[1224px] m-auto px-4'>
             <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-8'>
                 <div className='w-full md:w-auto text-center md:text-left'>
