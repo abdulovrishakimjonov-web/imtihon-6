@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Mainlayout from './components/Layout/Mainlayout';
 import HomePages from './pages/HomePages';
-import ProductsPages from './pages/ProductsPages';
 import BlogPages from './pages/BlogPages';
 import FAQPages from './pages/FAQPages';
 import ContactPages from './pages/ContactPages';
@@ -18,12 +17,12 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Mainlayout/>}>
         <Route index element={<HomePages />} /> 
-        <Route path='products' element={<ProductsPages/>}/>
         <Route path='blog' element={<BlogPages/>}/>
         <Route path='faq' element={<FAQPages/>}/>
         <Route path='contact' element={<ContactPages/>}/>
         <Route path='category/:category' element={<CategoryPage />} />
-        <Route path='produkts/:id' element={<ProductDetail />} />
+        <Route path="/technology/:category" element={<CategoryPage />} />
+        <Route path='/produkts/:id' element={<ProductDetail />} />
         <Route path="/technology" element={<Technology />} />
         <Route path="/about/:id" element={<AboutDetail />} />
         <Route path="/products" element={<Products />} />
