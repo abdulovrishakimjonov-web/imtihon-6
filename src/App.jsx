@@ -12,6 +12,7 @@ import ProductDetail from './pages/catigoriya/ProductDetail';
 import CategoryPage from './pages/catigoriya/CategoryPage';
 import Technology from './pages/Technology';
 import ProductPage from './pages/ProductsPagese';
+import SingleProduct from './pages/SingleProduct';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/best" element={<Best />} />
         <Route path="/technology/:category/:id" element={<ProductDetail />} />
         <Route path="/best/:id" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<SingleProduct />} />
       </Route>
     </Routes>
   );
