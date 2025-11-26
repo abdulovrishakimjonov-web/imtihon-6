@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Showcese from '../components/Showcese'
 import About from '../components/About';
 import Funktion from '../components/Funktion';
+import Axiose from '../components/Axiose';
+import Count from '../components/Count';
+import SectionNewProducts from './SectionNewProducts';
+import HomeBestSection from './HomeBestSection';
 
 const HomePages = () => {
   
@@ -42,7 +46,11 @@ const HomePages = () => {
       </div>
     </div>
     <About/>
+    <SectionNewProducts/>
     <Funktion/>
+    <HomeBestSection/>
+    <Axiose/>
+    <Count/>
 
     </div>
   )

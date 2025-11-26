@@ -6,22 +6,30 @@ import ProductsPages from './pages/ProductsPages';
 import BlogPages from './pages/BlogPages';
 import FAQPages from './pages/FAQPages';
 import ContactPages from './pages/ContactPages';
-import ProductDetail from './pages/ProductDetail';
-import CategoryPage from './pages/CategoryPage';
 import AboutDetail from './pages/AboutDetail';
+import Best from './components/Best';
+import Products from './components/Products';
+import ProductDetail from './pages/catigoriya/ProductDetail';
+import CategoryPage from './pages/catigoriya/CategoryPage';
+import Technology from './pages/Technology';
 
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Mainlayout/>}>
-        <Route index element={<HomePages />} />  {/* '/' */}
+        <Route index element={<HomePages />} /> 
         <Route path='products' element={<ProductsPages/>}/>
         <Route path='blog' element={<BlogPages/>}/>
         <Route path='faq' element={<FAQPages/>}/>
         <Route path='contact' element={<ContactPages/>}/>
         <Route path='category/:category' element={<CategoryPage />} />
-        <Route path='produkt/:id' element={<ProductDetail />} />
+        <Route path='produkts/:id' element={<ProductDetail />} />
+        <Route path="/technology" element={<Technology />} />
         <Route path="/about/:id" element={<AboutDetail />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/best" element={<Best />} />
+        <Route path="/technology/:category/:id" element={<ProductDetail />} />
+        <Route path="/best/:id" element={<ProductDetail />} />
       </Route>
     </Routes>
   );
