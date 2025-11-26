@@ -244,7 +244,7 @@ const FAQPages = () => {
                           {faq.question}
                         </span>
                         <svg
-                          className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${
+                          className={`w-6 h-6 text-blue-600 flex-shrink-2 transition-transform duration-300 ${
                             openQuestion === index ? 'rotate-180' : ''
                           }`}
                           fill="none"

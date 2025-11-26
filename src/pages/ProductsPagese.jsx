@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import blog from '../img/blog.png'
 
 const ProductPage = () => {
-  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -10,32 +9,69 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [activeTab, setActiveTab] = useState('description');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Demo uchun ID ni URL dan olish o'rniga hardcode qilamiz
+  const productId = 1; // Yoki kerakli ID
 
   useEffect(() => {
-    fetch(`https://68fa1f53ef8b2e621e7ed891.mockapi.io/api/produkt/${id}`)
-      .then(res => res.json())
+    console.log('Fetching product...');
+    fetch(`https://691aa27e2d8d7855756f8c58.mockapi.io/products2/${productId}`)
+      .then(res => {
+        console.log('Response status:', res.status);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Product data:', data);
         setProduct(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error(err);
+        console.error('Fetch error:', err);
+        setError(err.message);
         setLoading(false);
       });
-  }, [id]);
+  }, [productId]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <div className="text-xl text-gray-700">Loading product...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center bg-white p-8 rounded-2xl shadow-lg max-w-md">
+          <div className="text-6xl mb-4">❌</div>
+          <div className="text-xl font-bold text-gray-900 mb-2">Error Loading Product</div>
+          <div className="text-gray-600 mb-4">{error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Product not found</div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center bg-white p-8 rounded-2xl shadow-lg">
+          <div className="text-6xl mb-4">🔍</div>
+          <div className="text-xl font-bold text-gray-900">Product not found</div>
+        </div>
       </div>
     );
   }
@@ -46,33 +82,22 @@ const ProductPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="hover:text-blue-600 cursor-pointer">Home</span>
-            <span>/</span>
-            <span className="hover:text-blue-600 cursor-pointer">{product.category}</span>
-            <span>/</span>
-            <span className="text-gray-900">{product.title}</span>
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Images Section */}
           <div className="space-y-4">
-            {/* Main Image */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl  shadow-sm">
               <img
-                src={images[selectedImage]}
-                alt={product.title}
-                className="w-full h-96 object-contain"
+                src={images[selectedImage] || blog}
+                alt={product.title || 'Product'}
+                className="w-full h-96 rounded-md"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/400?text=No+Image';
+                }}
               />
             </div>
 
-            {/* Thumbnail Images */}
             <div className="grid grid-cols-4 gap-4">
               {images.map((img, index) => (
                 <div
@@ -85,9 +110,12 @@ const ProductPage = () => {
                   }`}
                 >
                   <img
-                    src={img}
+                    src={img || 'https://via.placeholder.com/100'}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-20 object-contain"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/100?text=No+Image';
+                    }}
                   />
                 </div>
               ))}
@@ -96,10 +124,9 @@ const ProductPage = () => {
 
           {/* Product Info Section */}
           <div className="space-y-6">
-            {/* Title & Rating */}
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-3">
-                {product.title}
+                {product.title || 'Product Name'}
               </h1>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
@@ -124,21 +151,18 @@ const ProductPage = () => {
               </div>
             </div>
 
-            {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-blue-600">${product.price}</span>
-              <span className="text-2xl text-gray-400 line-through">${(product.price * 1.3).toFixed(2)}</span>
+              <span className="text-4xl font-bold text-blue-600">${product.price || '0.00'}</span>
+              <span className="text-2xl text-gray-400 line-through">${((product.price || 0) * 1.3).toFixed(2)}</span>
               <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                 -23%
               </span>
             </div>
 
-            {/* Description */}
             <p className="text-gray-600 leading-relaxed">
               {product.description || 'Premium quality product with excellent features and specifications. Designed for modern lifestyle and everyday use.'}
             </p>
 
-            {/* Color Selection */}
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Color</h3>
               <div className="flex gap-3">
@@ -157,7 +181,6 @@ const ProductPage = () => {
               </div>
             </div>
 
-            {/* Size Selection */}
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Size</h3>
               <div className="flex gap-3">
@@ -177,7 +200,6 @@ const ProductPage = () => {
               </div>
             </div>
 
-            {/* Quantity */}
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Quantity</h3>
               <div className="flex items-center gap-4">
@@ -202,7 +224,6 @@ const ProductPage = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex gap-4 pt-4">
               <button className="flex-1 bg-blue-600 text-white py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
                 Add to Cart
@@ -214,7 +235,6 @@ const ProductPage = () => {
               </button>
             </div>
 
-            {/* Features */}
             <div className="grid grid-cols-2 gap-4 pt-6 border-t">
               <div className="flex items-center gap-3">
                 <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

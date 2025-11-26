@@ -14,7 +14,7 @@ const Header = () => {
         <div className='max-w-[1224px] m-auto px-4'>
             <div className='flex items-center justify-between py-4'>
                 <div>
-                    <img src={Logo} alt="Logo"/>
+                   <NavLink to="/"> <img src={Logo} alt="Logo"/></NavLink>
                 </div>
                 
                 <div className='hidden lg:block'>

@@ -47,8 +47,6 @@ const SectionTechnology = () => {
 
   return (
     <section className="p-6 max-w-[1224px] mx-auto">
-          <h2 className="font-medium text-[32px] text-[color:var(--black)] font-family">Technology</h2>
-          <div className="border-[color:var(--neutral-gray-b4b4b4)] border-t-2 border-solid mb-8"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  xl:grid-cols-6 gap-6">
         {products.map((product) => (
           <Link
