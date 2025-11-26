@@ -15,10 +15,10 @@ const About = () => {
       <div className="max-w-[1320px] mx-auto py-12 px-10 bg-[#063A88] rounded-2xl">
         <div className="flex gap-6 overflow-x-auto pb-4">
 
-          {data.map((item) => (
+          {data.map((item, index) => (
             <Link
               to={`/about/${item.id}`}
-              key={item.id}
+              key={`${item.id}-${index}`}
               className="bg-white rounded-lg min-w-[239px] shadow-md hover:shadow-xl transition"
             >
               <img
