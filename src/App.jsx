@@ -11,12 +11,14 @@ import Products from './components/Products';
 import ProductDetail from './pages/catigoriya/ProductDetail';
 import CategoryPage from './pages/catigoriya/CategoryPage';
 import Technology from './pages/Technology';
+import ProductPage from './pages/ProductsPagese';
 
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Mainlayout/>}>
         <Route index element={<HomePages />} /> 
+        <Route path='/praducts' element={<ProductPage/>}/>
         <Route path='blog' element={<BlogPages/>}/>
         <Route path='faq' element={<FAQPages/>}/>
         <Route path='contact' element={<ContactPages/>}/>
